@@ -13,7 +13,9 @@ export default class DashboardPage extends BasePage {
   async goToOrganizations() {
     await this.locators.organizationsLink.click();
   }
-
+  async navigateToOrganizations() {
+    await this.page.goto('/organizations');
+  }
   async logout() {
     await this.locators.logoutButton.click();
   }
