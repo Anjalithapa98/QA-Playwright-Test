@@ -1,0 +1,26 @@
+{
+  "name": "skillshikshya",
+  "version": "1.0.0",
+  "description": "",
+  "main": "break-continue.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anjalithapa/QA-Skill-Shikshya.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/anjalithapa/QA-Skill-Shikshya/issues"
+  },
+  "homepage": "https://github.com/anjalithapa/QA-Skill-Shikshya#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.0"
+  }
+}
