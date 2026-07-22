@@ -2,19 +2,19 @@ import { test, expect } from '../Fixtures/fixtures';
 
 test.describe('Chairlyo Login - Positive Test Cases', () => {
 
-  test.beforeEach(async ({ loginPage, baseUrl }) => {
+  test.beforeEach(async ({ loginPage, baseUrl }: any) => {
     await loginPage.navigateToChairlyo(baseUrl);
   });
 
-  test('Login with valid credentials should succeed', async ({ loginPage, validEmail, validPassword }) => {
-    await loginPage.loginToChairlyo(validEmail, validPassword);
+  test('Login with valid credentials should succeed', async ({ loginPage, email, password }: any) => {
+    await loginPage.loginToChairlyo(email, password);
     await loginPage.verifyLoginSuccess();
   });
 
 });
 
 
-// import { test, expect } from '../fixtures/fixtures';
+// import { test, expect } from '../Fixtures/fixtures';
 
 // test.describe('Chairlyo Login - Positive Test Cases', () => {
 

@@ -1,168 +1,99 @@
-import { expect, test } from '../Fixtures/fixtures';
-import LoginPage from '../pages/LoginPage';
+import { test, expect } from '@playwright/test';
 
-test.describe('Login', () => {
-  let loginPage: LoginPage;
+const baseUrl = 'https://stage.chairlyo.com/login';
 
-  test.beforeEach('Navigate to Chairlyo Login Page', async ({ baseUrl, page }) => {
-    loginPage = new LoginPage(page);
-    await loginPage.navigateToChairlyo(baseUrl);
+test.describe('Chairlyo Login - Negative Test Cases', () => {
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto(baseUrl);
   });
 
-  test('Login with valid credentials', async ({ page }) => {
-    // Different ways to locate the Email field
+  test('Invalid email + Valid password should not log in', async ({ page }) => {
+    await page.locator('[type="email"]').fill('wrong@chairlyo.com');
+    await page.locator('[type="password"]').fill('adminpassword');
+    await page.getByRole('button', { name: 'Log in' }).click();
+    await expect(page.getByText('Invalid credentials')).toBeVisible();
+    await expect(page).toHaveURL(/login/);
+  });
 
-    // CSS Attribute Selector (Recommended for this demo)
-    // await loginPage.fillEmail(email);
-    // await loginPage.fillEmail(email);
+  test('Valid email + Invalid password should not log in', async ({ page }) => {
+    await page.locator('[type="email"]').fill('admin@chairlyo.com');
+    await page.locator('[type="password"]').fill('wrongpassword');
+    await page.getByRole('button', { name: 'Log in' }).click();
+    await expect(page.getByText('Invalid credentials')).toBeVisible();
+    await expect(page).toHaveURL(/login/);
+  });
 
-    await loginPage.loginToChairlyo('admin@chairlyo.com', 'adminpassword');
-    await loginPage.verifyLoginSuccess();
+  test('Invalid email + Invalid password should not log in', async ({ page }) => {
+    await page.locator('[type="email"]').fill('wrong@chairlyo.com');
+    await page.locator('[type="password"]').fill('wrongpassword');
+    await page.getByRole('button', { name: 'Log in' }).click();
+    await expect(page.getByText('Invalid credentials')).toBeVisible();
+    await expect(page).toHaveURL(/login/);
+  });
 
-    // ID Selector
-    // await page.locator('#email').fill(email);
-
-    // Name Attribute
-    // await page.locator('[name="email"]').fill(email);
-
-    // By Role
-    // await page.getByRole('textbox', { name: 'Email*' }).fill(email);
-
-    //  By Placeholder
-//     await page.getByPlaceholder('e.g. xyz@gmail.com').fill(email);
-
-//     // Different ways to locate the Password field
-
-//     // CSS Attribute Selector
-//     await page.locator('[name="password"]').fill(password);
-
-//     // ID Selector
-//     // await page.locator('#password').fill(password);
-
-//     // By Label
-//     // await page.getByLabel('Password').fill(password);
-
-//     // Different ways to locate the Login button
-
-//     // By Role (Recommended)
-//     await page.getByRole('button', { name: 'log in' }).click();
-
-//     // By Placeholder
-//     // await page.getByPlaceholder('e.g. xyz@gmail.com').fill(email);
-
-//     // Different ways to locate the Password field
-
-//     // CSS Attribute Selector
-//     await page.locator('[name="password"]').fill(password);
-
-//     // ID Selector
-//     // await page.locator('#password').fill(password);
-
-//     // By Label
-//     // await page.getByLabel('Password').fill(password);
-
-//     // Different ways to locate the Login button
-
-//     // By Role (Recommended)
-//     await page.getByRole('button', { name: 'log in' }).click();
-
-
-
+  test('Empty credentials should prevent login', async ({ page }) => {
+    await page.getByRole('button', { name: 'Log in' }).click();
+    await expect(page).toHaveURL(/login/);
   });
 
 });
 
-//import { test, expect } from '@playwright/test';
-// import LoginPage from '../pages/loginPage';
+// import { test, expect } from '@playwright/test';
 
-// test.describe('Login', () => {
-//   const email = 'admin@chairlyo.com';
-//   const password = 'adminpassword';
-//   const baseUrl = 'https://stage.chairlyo.com/login';
-//   let loginPage: LoginPage;
-
-//   test.beforeEach('Navigate to Chairlyo Login Page', async ({ page }) => {
-//     loginPage = new LoginPage(page);
-//     await loginPage.navigateToChairlyo(baseUrl);
-//   });
-
-//   test('Login with valid credentials', async ({ page }) => {
-//     await loginPage.loginToChairlyo(email, password);
-//     await loginPage.verifyLoginSuccess();
-//     await loginPage.verifyDashboardText();
-
-//     //await expect(page.getByText('Dashboard').nth(1)).toBeVisible();
-//   });
-
-//   test('verify email and password field values', async () => {
-//     //Email input field value verification
-//     await loginPage.fillEmail(email);
-//     await loginPage.verifyEmailFieldValue(email);
-
-//     //Password input field value verification
-//     await loginPage.fillPassword(password);
-//     await loginPage.verifyPasswordFieldValue(password);
-
-//     //Click on login button
-//     await loginPage.clickLoginButton();
-
-//     //Verify login success
-//     await loginPage.verifyLoginSuccess();
-//     await loginPage.verifyDashboardText();
-//   });
-// });
-
-// test.skip('test', async ({ page }) => {
-// });
-
-  //   
-  // import { test, expect } from '@playwright/test';
-
-// test.describe('Login', () => {
-//   const email = 'admin@chairlyo.com';
-//   const password = 'adminpassword';
+// test.describe('Chairlyo Login - Negative Test Cases', () => {
 //   const baseUrl = 'https://stage.chairlyo.com/login';
 
-//   test.beforeEach('Navigate to Chairlyo Login Page', async ({ page }) => {
+//   // सबै test अघि login page मा जाने
+//   test.beforeEach(async ({ page }) => {
 //     await page.goto(baseUrl);
 //   });
 
-  // test('Login with valid credentials', async ({ page }) => {
-  //   // Different ways to locate the Email field
+//   test('Invalid email + Valid password should not log in', async ({ page }) => {
+//     // 1. Fill invalid email and valid password
+//     await page.locator('[type="email"]').fill('wrong@chairlyo.com');
+//     await page.locator('[type="password"]').fill('adminpassword');
 
-    // CSS Attribute Selector (Recommended for this demo)
-//     await page.locator('[type="email"]').fill(email);
+//     // 2. Click Log In
+//     await page.getByRole('button', { name: 'Log in' }).click();
 
-//     await loginPage.loginToChairlyo(email, password);
-//     await loginPage.verifyLoginSuccess();
+//     // 3. Verify login unsuccessful
+//     await expect(page.getByText('Invalid credentials')).toBeVisible();
+//     await expect(page).toHaveURL(/login/);
+//   });
 
-//     //getByText is used to locate the element with text Dashboard when there is no any locator available
-//     await expect(page.getByText('Dashboard')).toBeVisible();
+//   test('Valid email + Invalid password should not log in', async ({ page }) => {
+//     // 1. Fill valid email and invalid password
+//     await page.locator('[type="email"]').fill('admin@chairlyo.com');
+//     await page.locator('[type="password"]').fill('wrongpassword');
 
-//     // ID Selector
-//     // await page.locator('#email').fill(email);
+//     // 2. Click Log In
+//     await page.getByRole('button', { name: 'Log in' }).click();
 
-//     // Name Attribute
-//     // await page.locator('[name="email"]').fill(email);
+//     // 3. Verify login unsuccessful
+//     await expect(page.getByText('Invalid credentials')).toBeVisible();
+//     await expect(page).toHaveURL(/login/);
+//   });
 
-//     // By Role
-//     // await page.getByRole('textbox', { name: 'Email*' }).fill(email);
+//   test('Invalid email + Invalid password should not log in', async ({ page }) => {
+//     // 1. Fill invalid email and invalid password
+//     await page.locator('[type="email"]').fill('wrong@chairlyo.com');
+//     await page.locator('[type="password"]').fill('wrongpassword');
 
-//     // By Placeholder
-//     // await page.getByPlaceholder('e.g. xyz@gmail.com').fill(email);
+//     // 2. Click Log In
+//     await page.getByRole('button', { name: 'Log in' }).click();
 
-//     // Different ways to locate the Password field
+//     // 3. Verify login unsuccessful
+//     await expect(page.getByText('Invalid credentials')).toBeVisible();
+//     await expect(page).toHaveURL(/login/);
+//   });
 
-//     // CSS Attribute Selector
-//     await page.locator('[name="password"]').fill(password);
+//   test('Empty credentials should prevent login', async ({ page }) => {
+//     // 1. Leave both fields empty and click Log In
+//     await page.getByRole('button', { name: 'Log in' }).click();
 
-//     // ID Selector
-//     // await page.locator('#password').fill(password);
+//     // 2. Verify login is prevented (still on login page)
+//     await expect(page).toHaveURL(/login/);
+//   });
 
-//     // By Label
-//     // await page.getByLabel('Password').fill(password);
-
-//     // Different ways to locate the Login button
-
-//     // By Role (Recommended)
-//     await page.getByRole('button', { name: 'log in' }).click();
+// });

@@ -15,9 +15,9 @@
 //export const expect = baseExpect;
 
 import { test as base, expect } from '@playwright/test';
-import LoginPage from '../pages/LoginPage';
+import LoginPage from '../pages/loginPage';
 import DashboardPage from '../pages/DashboardPage';
-import OrganizationsPage from '../pages/organizationspage';
+import OrganizationsPage from '../pages/organizationsPage';
 
 type MyFixtures = {
   loginPage: LoginPage;
